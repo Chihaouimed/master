@@ -11,6 +11,7 @@
                         <field name="size"/>
                         <field name="power"/>
                         <field name="number_of_modules"/>
+                        <field name="nombre_onduleur"/>
                         <field name="total_power" readonly="1"/>
                     </group>
                 </sheet>
@@ -27,6 +28,7 @@
                 <field name="brand"/>
                 <field name="power"/>
                 <field name="number_of_modules"/>
+                <field name="nombre_onduleur"/>
                 <field name="total_power"/>
             </tree>
         </field>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- Form View (unchanged) -->
+    <!-- Form View with notebooks and groups -->
     <record id="view_pv_installation_form" model="ir.ui.view">
         <field name="name">pv.installation.form</field>
         <field name="model">pv.installation</field>
@@ -13,36 +13,69 @@
                     <button name="action_in_production" string="Mettre en production" states="in_progress,pending" type="object" class="oe_highlight"/>
                     <button name="action_in_stop" string="Arrêter" states="in_production,in_progress" type="object"/>
                     <button name="action_cancel" string="Annuler" states="draft,in_progress,pending" type="object"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,pending,in_production"
+                           statusbar_colors='{"draft":"lightblue", "in_progress":"blue", "pending":"orange", "in_production":"green"}'/>
                 </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom Installation"/>
+                        </h1>
+                    </div>
                     <group>
-                        <field name="name"/>
-                        <field name="code"/>
-                        <field name="client"/>
-                        <field name="date_mise_en_service"/>
-                        <field name="type_installation"/>
-                        <field name="district_steg_id"/>
-                        <field name="reference_steg"/>
-                        <field name="type_compteur"/>
-                        <field name="calibre_disjoncteur_existant_id"/>
-                        <field name="calibre_disjoncteur_steg_id"/>
-                        <field name="address_id"/>
-                        <field name="capacity"/>
-                        <field name="state" widget="statusbar"
-                            statusbar_visible="draft,in_progress,pending,in_production"
-                            statusbar_colors='{"draft":"lightblue", "in_progress":"blue", "pending":"orange", "in_production":"green"}'/>
+                        <group>
+                            <field name="code"/>
+                            <field name="client"/>
+                            <field name="address_id"/>
+                            <field name="date_mise_en_service"/>
+                            <field name="active"/>
+                        </group>
+
                     </group>
+                    <notebook>
+                        <page string="Informations Techniques">
+                            <group>
+                                <group string="Type et Configuration">
+                                    <field name="type_installation"/>
+                                    <field name="type_compteur"/>
+                                </group>
+                                <group string="STEG">
+                                    <field name="district_steg_id"/>
+                                    <field name="reference_steg"/>
+                                    <field name="calibre_disjoncteur_existant_id"/>
+                                    <field name="calibre_disjoncteur_steg_id"/>
+                                    <field name="puissance_souscrite"/>
+                                    <field name="consommation_annuelle"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Données Techniques">
+    <group>
+        <field name="module_ids" nolabel="1">
+            <tree editable="bottom">
+                <field name="reference"/>
+                <field name="brand"/>
+                <field name="size"/>
+                <field name="power"/>
+                <field name="number_of_modules"/>
+                <field name="total_power"/>
+            </tree>
+        </field>
+    </group>
+</page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
-        <field name="message_follower_ids" widget="mail_followers"/>
-        <field name="activity_ids" widget="mail_activity"/>
-        <field name="message_ids" widget="mail_thread"/>
-    </div>
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
 
-    <!-- Tree View (FIXED: Filters moved to search) -->
+    <!-- Tree View (unchanged) -->
     <record id="view_pv_installation_tree" model="ir.ui.view">
         <field name="name">pv.installation.tree</field>
         <field name="model">pv.installation</field>
@@ -58,13 +91,14 @@
                 <field name="type_compteur"/>
                 <field name="calibre_disjoncteur_existant_id"/>
                 <field name="calibre_disjoncteur_steg_id"/>
+                <field name="puissance_souscrite"/>
+                <field name="consommation_annuelle"/>
                 <field name="state"/>
-                <field name="capacity"/>
             </tree>
         </field>
     </record>
 
-    <!-- Search View (NEW: Added filters here) -->
+    <!-- Search View (unchanged) -->
     <record id="view_pv_installation_search" model="ir.ui.view">
         <field name="name">pv.installation.search</field>
         <field name="model">pv.installation</field>
@@ -76,7 +110,7 @@
         </field>
     </record>
 
-    <!-- Action (Updated to include search view) -->
+    <!-- Action (unchanged) -->
     <record id="action_pv_installation" model="ir.actions.act_window">
         <field name="name">PV Installations</field>
         <field name="res_model">pv.installation</field>
@@ -85,5 +119,5 @@
     </record>
 
     <menuitem id="menu_pv_root" name="PV Management" sequence="10"/>
-<menuitem id="menu_pv_installation" name="Installations" parent="menu_pv_root" action="action_pv_installation"/>
+    <menuitem id="menu_pv_installation" name="Installations" parent="menu_pv_root" action="action_pv_installation"/>
 </odoo>
