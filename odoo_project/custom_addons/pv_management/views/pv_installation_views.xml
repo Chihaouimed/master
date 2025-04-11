@@ -17,7 +17,15 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="client_central"/>
+                        <field name="code"/>
+                        <field name="client"/>
+                        <field name="date_mise_en_service"/>
+                        <field name="type_installation"/>
+                        <field name="district_steg_id"/>
+                        <field name="reference_steg"/>
+                        <field name="type_compteur"/>
+                        <field name="calibre_disjoncteur_existant_id"/>
+                        <field name="calibre_disjoncteur_steg_id"/>
                         <field name="address_id"/>
                         <field name="capacity"/>
                         <field name="state" widget="statusbar"
@@ -41,7 +49,15 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="client_central"/>
+                <field name="code"/>
+                <field name="client"/>
+                <field name="date_mise_en_service"/>
+                <field name="type_installation"/>
+                <field name="district_steg_id"/>
+                <field name="reference_steg"/>
+                <field name="type_compteur"/>
+                <field name="calibre_disjoncteur_existant_id"/>
+                <field name="calibre_disjoncteur_steg_id"/>
                 <field name="state"/>
                 <field name="capacity"/>
             </tree>
