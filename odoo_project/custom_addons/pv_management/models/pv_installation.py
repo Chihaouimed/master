@@ -9,10 +9,11 @@ class PVInstallation(models.Model):
     _description = 'Solar PV Installation'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
+    module_ids = fields.One2many('pv.module', 'installation_id', string='Modules PV')
 
     # Fields
     active = fields.Boolean(string='Active', default=True)
-    name = fields.Char(string='Nom Instalation', required=True)
+    name = fields.Char(string='Nom Instalation')
     code = fields.Char(string='Code')
     client = fields.Many2one('res.partner', string='Client')
     date_mise_en_service = fields.Date(string='Date de Mise en Service')
@@ -36,8 +37,8 @@ class PVInstallation(models.Model):
     calibre_disjoncteur_existant_id = fields.Many2one('configuration.district.steg',
                                                       string='Calibre Disjoncteur Existant (A)')
     calibre_disjoncteur_steg_id = fields.Many2one('configuration.district.steg', string='Calibre Disjoncteur STEG (A)')
-    capacity = fields.Float(string='Capacité (kW)')
-
+    puissance_souscrite = fields.Float(string='Puissance Souscrite')
+    consommation_annuelle = fields.Integer(string='Consommation Annuelle')
     # State Field
     state = fields.Selection(
         selection=[
