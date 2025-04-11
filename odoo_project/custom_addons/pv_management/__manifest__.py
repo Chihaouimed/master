@@ -1,0 +1,19 @@
+{
+    'name': 'PV Management',
+    'version': '1.0',
+    'summary': 'Manage PV Installations, Modules, and Inverters',
+    'description': 'Module to manage PV installations, modules, and inverters',
+    'author': 'Chihaoui Mohamed',
+    'category': 'Technical',
+    'depends':  ['base', 'mail', 'hr'],
+    'data': [
+
+        'security/ir.model.access.csv',
+        'views/pv_installation_views.xml',
+        'views/pv_module_views.xml',
+        'views/pv_inverter_views.xml',
+        'views/alarm_management_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+}
