@@ -7,9 +7,11 @@ from odoo.exceptions import ValidationError
 class PVInstallation(models.Model):
     _name = 'pv.installation'
     _description = 'Solar PV Installation'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
 
     # Fields
+    active = fields.Boolean(string='Active', default=True)
     name = fields.Char(string='Nom', required=True)
     client_central = fields.Many2one('res.partner', string='Client Central')
     address_id = fields.Many2one(
