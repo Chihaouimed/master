@@ -12,13 +12,30 @@ class PVInstallation(models.Model):
 
     # Fields
     active = fields.Boolean(string='Active', default=True)
-    name = fields.Char(string='Nom', required=True)
-    client_central = fields.Many2one('res.partner', string='Client Central')
+    name = fields.Char(string='Nom Instalation', required=True)
+    code = fields.Char(string='Code')
+    client = fields.Many2one('res.partner', string='Client')
+    date_mise_en_service = fields.Date(string='Date de Mise en Service')
     address_id = fields.Many2one(
         'res.partner',
         string='Adresse',
         ondelete='set null'
     )
+    type_installation = fields.Selection([
+        ('bt_residentiel', 'BT - Résidentiel'),
+        ('bt_commercial', 'BT - Commercial'),
+        ('mt_industriel', 'MT - Industriel')
+    ], string="Type d'Installation")
+    district_steg_id = fields.Many2one('configuration.district.steg', string='District STEG')
+    reference_steg = fields.Integer(string='Reference STEG')
+    type_compteur = fields.Selection([
+        ('monophase', 'Monophasé'),
+        ('triphase', 'Triphasé')
+    ], string='Type de Compteur')
+
+    calibre_disjoncteur_existant_id = fields.Many2one('configuration.district.steg',
+                                                      string='Calibre Disjoncteur Existant (A)')
+    calibre_disjoncteur_steg_id = fields.Many2one('configuration.district.steg', string='Calibre Disjoncteur STEG (A)')
     capacity = fields.Float(string='Capacité (kW)')
 
     # State Field
