@@ -25,6 +25,11 @@
                             statusbar_colors='{"draft":"lightblue", "in_progress":"blue", "pending":"orange", "in_production":"green"}'/>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+        <field name="message_follower_ids" widget="mail_followers"/>
+        <field name="activity_ids" widget="mail_activity"/>
+        <field name="message_ids" widget="mail_thread"/>
+    </div>
             </form>
         </field>
     </record>
@@ -49,9 +54,6 @@
         <field name="model">pv.installation</field>
         <field name="arch" type="xml">
             <search>
-                <!-- Active/Archived Filters -->
-                <filter name="active_records" string="Actifs" domain="[('active', '=', True)]"/>
-                <filter name="archived_records" string="Archivés" domain="[('active', '=', False)]"/>
                 <!-- Group By State -->
                 <filter name="group_by_state" string="Group by State" context="{'group_by':'state'}"/>
             </search>
@@ -66,6 +68,6 @@
         <field name="search_view_id" ref="view_pv_installation_search"/>
     </record>
 
-    <menuitem id="menu_pv_installation_root" name="PV Installation"/>
-    <menuitem id="menu_pv_installation" name="Installations" parent="menu_pv_installation_root" action="action_pv_installation"/>
+    <menuitem id="menu_pv_root" name="PV Management" sequence="10"/>
+<menuitem id="menu_pv_installation" name="Installations" parent="menu_pv_root" action="action_pv_installation"/>
 </odoo>
