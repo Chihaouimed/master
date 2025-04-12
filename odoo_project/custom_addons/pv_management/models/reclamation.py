@@ -1,29 +1,26 @@
-# models/fiche_intervention.py
+
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
-class FicheIntervention(models.Model):
-    _name = 'fiche.intervention'
-    _description = 'Fiche d\'intervention'
+class Reclamation(models.Model):
+    _name = 'reclamation'
+    _description = 'Réclamation'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'date_intervention desc, id desc'
+    _order = 'id desc'
 
+    # Champs principaux
     name = fields.Char(string='Référence', required=True, copy=False, readonly=True,
-                       default=lambda self: self.env['ir.sequence'].next_by_code(
-                           'fiche.intervention.sequence') or 'Nouveau')
+                       default=lambda self: self.env['ir.sequence'].next_by_code('reclamation.sequence') or 'Nouveau')
+    date_heure = fields.Datetime(string='Date et Heure', required=True, default=fields.Datetime.now)
+    adresse = fields.Char(string='Adresse', required=True)
+    contrat_id = fields.Many2one('res.partner', string='Contrat')  # À adapter selon votre modèle de contrat
+    nom_central_id = fields.Many2one('pv.installation', string='Nom Central')
+    description = fields.Text(string='Description', required=True)
+    code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
+    cause_alarme = fields.Text(string='Cause de l\'Alarme')
 
-    # Nouveaux champs selon les spécifications
-    type_intervention = fields.Selection([
-        ('preventive', 'Préventive'),
-        ('corrective', 'Corrective'),
-        ('installation', 'Installation'),
-        ('mise_a_jour', 'Mise à jour'),
-        ('autre', 'Autre')
-    ], string='Type d\'intervention', required=True)
-
-    equipe_intervention_ids = fields.Many2many('hr.employee', string='Équipe d\'Intervention')
-
-    # État aligné avec le module Help Desk (réclamation)
+    # État de la réclamation
     state = fields.Selection([
         ('draft', 'Ouvert'),
         ('in_progress', 'En cours'),
@@ -31,20 +28,8 @@ class FicheIntervention(models.Model):
         ('block', 'Bloqué')
     ], string='État', default='draft', tracking=True)
 
-    # Champs temporels
-    date_intervention = fields.Date(string='Date d\'intervention', required=True, default=fields.Date.today)
-    heure_intervention = fields.Float(string='Heure d\'intervention', help="Format 24h (ex: 13.5 pour 13h30)")
-    agenda = fields.Text(string='Agenda', help="Planification détaillée de l'intervention")
-
-    # Champ pour le bilan final qui apparaît uniquement à l'état fermé
-    intervention_text = fields.Text(string='Bilan de l\'intervention',
-                                    help="Rapport détaillé de l'intervention effectuée")
-
-    # Champs relationnels
-    reclamation_id = fields.Many2one('reclamation', string='Réclamation associée')
-    installation_id = fields.Many2one('pv.installation', string='Installation')
-    code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
-    adresse = fields.Char(string='Adresse')
+    # Champ pour lier à fiche.intervention (si ce modèle existe ou sera créé)
+    intervention_ids = fields.One2many('fiche.intervention', 'reclamation_id', string='Fiches d\'intervention')
 
     # Méthodes pour changer d'état
     def action_draft(self):
@@ -55,20 +40,40 @@ class FicheIntervention(models.Model):
 
     def action_closed(self):
         self.write({'state': 'closed'})
+        # Déclencher l'email après le changement d'état
+        self._send_notification_email()
 
     def action_block(self):
         self.write({'state': 'block'})
 
-    def action_view_reclamation(self):
-        """Bouton pour revenir à la réclamation d'origine"""
-        self.ensure_one()
-        if not self.reclamation_id:
-            return
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'Nouveau') == 'Nouveau':
+            vals['name'] = self.env['ir.sequence'].next_by_code('reclamation.sequence') or 'Nouveau'
+        return super(Reclamation, self).create(vals)
 
+    def _send_notification_email(self):
+        """Envoi d'email lors de la fermeture d'une réclamation"""
+        self.ensure_one()
+        if not self.contrat_id or not self.contrat_id.email:
+            return False
+
+        template = self.env.ref('pv_management.email_template_reclamation_closed', raise_if_not_found=False)
+        if template:
+            template.send_mail(self.id, force_send=True)
+
+    def action_create_intervention(self):
+        """Bouton pour créer une fiche d'intervention"""
+        self.ensure_one()
         return {
-            'name': 'Réclamation',
+            'name': 'Créer une fiche d\'intervention',
             'view_mode': 'form',
-            'res_model': 'reclamation',
-            'res_id': self.reclamation_id.id,
+            'res_model': 'fiche.intervention',
             'type': 'ir.actions.act_window',
+            'context': {
+                'default_reclamation_id': self.id,
+                'default_installation_id': self.nom_central_id.id,
+                'default_adresse': self.adresse,
+                'default_code_alarm_id': self.code_alarm_id.id,
+            },
         }
