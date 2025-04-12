@@ -16,4 +16,8 @@ class AlarmManagement(models.Model):
     marque_onduleur_id = fields.Many2one('pv.inverter', string='Marque Onduleur', translate=True)
     code_alarm = fields.Char(string='Code Alarm', required=True, translate=True)
 
+class MarqueOnduleur(models.Model):
+    _name = 'marque.onduleur'
+    _description = 'Marque Onduleur'
 
+    name = fields.Char(string='Name', required=True, translate=True)
