@@ -7,12 +7,12 @@
                 <sheet>
                     <group>
                         <field name="number_of_inverters"/>
-                        <field name="display_condition"/>
-                        <field name="reference"/>
-                        <field name="brand"/>
-                        <field name="power"/>
-                        <field name="generation_capacity"/>
-                        <field name="total_power"/>
+                        <field name="reference_onduleur_pv1_id"/>
+                        <field name="marque_onduleur_pv1"/>
+                        <field name="puissance_onduleur_pv1"/>
+                        <field name="calibre_disjoncteur_onduleur_pv1"/>
+                        <field name="nombre_onduleur_pv1"/>
+                        <field name="puissance_totale_ag"/>
                     </group>
                 </sheet>
             </form>
@@ -24,11 +24,13 @@
         <field name="model">pv.inverter</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="reference"/>
-                <field name="brand"/>
-                <field name="power"/>
-                <field name="generation_capacity"/>
-                <field name="total_power"/>
+                <field name="number_of_inverters"/>
+                <field name="reference_onduleur_pv1_id"/>
+                <field name="marque_onduleur_pv1"/>
+                <field name="puissance_onduleur_pv1"/>
+                <field name="calibre_disjoncteur_onduleur_pv1"/>
+                <field name="nombre_onduleur_pv1"/>
+                <field name="puissance_totale_ag"/>
             </tree>
         </field>
     </record>

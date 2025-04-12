@@ -50,20 +50,35 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Données Techniques">
-    <group>
-        <field name="module_ids" nolabel="1">
-            <tree editable="bottom">
-                <field name="reference"/>
-                <field name="brand"/>
-                <field name="size"/>
-                <field name="power"/>
-                <field name="number_of_modules"/>
-                <field name="total_power"/>
-            </tree>
-        </field>
-    </group>
-</page>
+                        <page string="Données Module">
+                            <group>
+                                <field name="module_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                    <field name="reference"/>
+                                    <field name="brand"/>
+                                    <field name="size"/>
+                                    <field name="power"/>
+                                    <field name="number_of_modules"/>
+
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Données Onduleur">
+                            <group>
+                                <field name="inverters_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="number_of_inverters"/>
+                                        <field name="reference_onduleur_pv1_id"/>
+                                        <field name="marque_onduleur_pv1"/>
+                                        <field name="puissance_onduleur_pv1"/>
+                                        <field name="calibre_disjoncteur_onduleur_pv1"/>
+                                        <field name="nombre_onduleur_pv1"/>
+                                        <field name="puissance_totale_ag"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
