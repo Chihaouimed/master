@@ -10,6 +10,7 @@ class PVInstallation(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
     module_ids = fields.One2many('pv.module', 'installation_id', string='Modules PV')
+    inverters_ids = fields.One2many('pv.inverter', 'installation_id', string='Onduleur PV')
 
     # Fields
     active = fields.Boolean(string='Active', default=True)
