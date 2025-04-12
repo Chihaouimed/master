@@ -43,11 +43,12 @@
                 <field name="code_alarm"/>
                 <group expand="0" string="Group By">
                     <filter name="group_by_partie" string="Partie" context="{'group_by': 'partie'}"/>
-                    <filter name="group_by_marque" string="Marque Onduleur" context="{'group_by': 'marque_onduleur_id'}"/>
                 </group>
             </search>
         </field>
     </record>
+
+
 
     <!-- Actions -->
     <record id="action_alarm_management" model="ir.actions.act_window">
@@ -57,7 +58,7 @@
     </record>
 
 
-    <!-- Menus -->
-    <menuitem id="menu_alarm_management" name="Gestion des Alarmes" parent="menu_pv_root" action="action_alarm_management"/>
 
+    <!-- Menus -->
+    <menuitem id="menu_alarm_management" name="Gestion des Alarmes" parent="menu_pv_root"/>
 </odoo>

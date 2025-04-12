@@ -54,5 +54,5 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_pv_inverter" name="Inverters" parent="menu_pv_root" action="action_pv_inverter"/>
+    <menuitem id="menu_pv_inverter" name="Onduleurs" parent="menu_pv_root" action="action_pv_inverter"/>
 </odoo>
