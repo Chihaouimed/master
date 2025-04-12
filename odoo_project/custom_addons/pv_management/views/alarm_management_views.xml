@@ -49,32 +49,6 @@
         </field>
     </record>
 
-    <!-- Marque Onduleur Form View -->
-    <record id="view_marque_onduleur_form" model="ir.ui.view">
-        <field name="name">marque.onduleur.form</field>
-        <field name="model">marque.onduleur</field>
-        <field name="arch" type="xml">
-            <form>
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <!-- Marque Onduleur Tree View -->
-    <record id="view_marque_onduleur_tree" model="ir.ui.view">
-        <field name="name">marque.onduleur.tree</field>
-        <field name="model">marque.onduleur</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name"/>
-            </tree>
-        </field>
-    </record>
-
     <!-- Actions -->
     <record id="action_alarm_management" model="ir.actions.act_window">
         <field name="name">Gestion des Alarmes</field>
@@ -82,14 +56,8 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="action_marque_onduleur" model="ir.actions.act_window">
-        <field name="name">Marques d'Onduleur</field>
-        <field name="res_model">marque.onduleur</field>
-        <field name="view_mode">tree,form</field>
-    </record>
 
     <!-- Menus -->
-    <menuitem id="menu_alarm_management" name="Gestion des Alarmes" parent="menu_pv_root"/>
-    <menuitem id="menu_alarm_list" name="Alarmes" parent="menu_alarm_management" action="action_alarm_management"/>
-    <menuitem id="menu_marque_onduleur" name="Marques d'Onduleur" parent="menu_alarm_management" action="action_marque_onduleur"/>
+    <menuitem id="menu_alarm_management" name="Gestion des Alarmes" parent="menu_pv_root" action="action_alarm_management"/>
+
 </odoo>
