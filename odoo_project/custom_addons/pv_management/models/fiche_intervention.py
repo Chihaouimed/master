@@ -9,7 +9,21 @@ class FicheIntervention(models.Model):
     name = fields.Char(string='Référence', required=True, copy=False, readonly=True,
                        default=lambda self: self.env['ir.sequence'].next_by_code(
                            'fiche.intervention.sequence') or 'Nouveau')
-    date = fields.Date(string='Date', required=True, default=fields.Date.today)
+    # Type d'intervention (new field)
+    type_intervention = fields.Selection([
+        ('maintenance', 'Maintenance'),
+        ('installation', 'Installation'),
+        ('reparation', 'Réparation'),
+        ('inspection', 'Inspection'),
+        ('autre', 'Autre')
+    ], string='Type d\'intervention', required=True, tracking=True)
+
+    date = fields.Date(string='Date d\'intervention', required=True, default=fields.Date.today)
+    # Heure d'intervention (new field)
+    heure_intervention = fields.Float(string='Heure d\'intervention', copy=True)
+    # Agenda (new field)
+    agenda = fields.Text(string='Agenda', help="Programme prévu pour l'intervention")
+
     adresse = fields.Char(string='Adresse')
     installation_id = fields.Many2one('pv.installation', string='Installation')
     reclamation_id = fields.Many2one('reclamation', string='Réclamation associée')
@@ -17,15 +31,22 @@ class FicheIntervention(models.Model):
     description = fields.Text(string='Description de l\'intervention')
     actions_effectuees = fields.Text(string='Actions effectuées')
 
+    # Updated state field to match Help Desk
     state = fields.Selection([
-        ('draft', 'Brouillon'),
-        ('scheduled', 'Planifiée'),
+        ('draft', 'Ouvert'),
         ('in_progress', 'En cours'),
-        ('done', 'Terminée'),
-        ('canceled', 'Annulée')
+        ('closed', 'Fermé'),
+        ('block', 'Bloqué')
     ], string='État', default='draft', tracking=True)
 
+    # Field for technician - may need to be expanded to team
     technicien_id = fields.Many2one('hr.employee', string='Technicien')
+    # Team field (new)
+    equipe_intervention_ids = fields.Many2many('hr.employee', string='Équipe d\'Intervention')
+
+    # Intervention text (conditional field)
+    intervention_text = fields.Text(string='Bilan d\'intervention',
+                                    help="Bilan final de l'intervention après fermeture")
 
     def action_view_reclamation(self):
         """Bouton pour revenir à la réclamation d'origine"""
@@ -40,3 +61,16 @@ class FicheIntervention(models.Model):
             'res_id': self.reclamation_id.id,
             'type': 'ir.actions.act_window',
         }
+
+    # Add state change methods
+    def action_draft(self):
+        self.write({'state': 'draft'})
+
+    def action_in_progress(self):
+        self.write({'state': 'in_progress'})
+
+    def action_closed(self):
+        self.write({'state': 'closed'})
+
+    def action_block(self):
+        self.write({'state': 'block'})
