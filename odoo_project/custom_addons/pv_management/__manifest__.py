@@ -13,6 +13,7 @@
         'views/pv_module_views.xml',
         'views/pv_inverter_views.xml',
         'views/reclamation_views.xml',
+        'views/alarm_management_views.xml',
         'views/fiche_intervention_views.xml',
     ],
     'installable': True,

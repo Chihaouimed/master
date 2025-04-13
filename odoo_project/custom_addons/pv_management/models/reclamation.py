@@ -13,7 +13,7 @@ class Reclamation(models.Model):
     name = fields.Char(string='Référence', required=True, copy=False, readonly=True,
                        default=lambda self: self.env['ir.sequence'].next_by_code('reclamation.sequence') or 'Nouveau')
     date_heure = fields.Datetime(string='Date et Heure', required=True, default=fields.Datetime.now)
-    adresse = fields.Char(string='Adresse', required=True)
+    adresse = fields.Many2one( 'res.partner', string='Adresse',ondelete='set null')
     contrat_id = fields.Many2one('res.partner', string='Contrat')  # À adapter selon votre modèle de contrat
     nom_central_id = fields.Many2one('pv.installation', string='Nom Central')
     description = fields.Text(string='Description', required=True)
@@ -30,6 +30,23 @@ class Reclamation(models.Model):
 
     # Champ pour lier à fiche.intervention (si ce modèle existe ou sera créé)
     intervention_ids = fields.One2many('fiche.intervention', 'reclamation_id', string='Fiches d\'intervention')
+    intervention_count = fields.Integer(compute='_compute_intervention_count', string='Nombre d\'interventions')
+
+    def _compute_intervention_count(self):
+        for rec in self:
+            rec.intervention_count = self.env['fiche.intervention'].search_count([('reclamation_id', '=', rec.id)])
+
+    def action_view_interventions(self):
+        self.ensure_one()
+        return {
+            'name': 'Interventions',
+            'view_mode': 'tree,form',
+            'res_model': 'fiche.intervention',
+            'domain': [('reclamation_id', '=', self.id)],
+            'type': 'ir.actions.act_window',
+            'context': {'default_reclamation_id': self.id}
+        }
+
 
     # Méthodes pour changer d'état
     def action_draft(self):
