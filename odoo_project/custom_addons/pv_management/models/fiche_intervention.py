@@ -24,7 +24,7 @@ class FicheIntervention(models.Model):
     # Agenda (new field)
     agenda = fields.Text(string='Agenda', help="Programme prévu pour l'intervention")
 
-    adresse = fields.Char(string='Adresse')
+    adresse =  fields.Many2one( 'res.partner', string='Adresse')
     installation_id = fields.Many2one('pv.installation', string='Installation')
     reclamation_id = fields.Many2one('reclamation', string='Réclamation associée')
     code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')

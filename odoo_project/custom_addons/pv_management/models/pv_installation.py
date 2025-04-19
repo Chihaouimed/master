@@ -15,7 +15,7 @@ class PVInstallation(models.Model):
     # Fields
     active = fields.Boolean(string='Active', default=True)
     name = fields.Char(string='Nom Instalation')
-    code = fields.Char(string='Code')
+    code = fields.Char(string='Code', readonly=True, copy=False, default=lambda self: self.env['ir.sequence'].next_by_code('pv.installation.sequence') or 'Nouveau')
     client = fields.Many2one('res.partner', string='Client')
     date_mise_en_service = fields.Date(string='Date de Mise en Service')
     address_id = fields.Many2one(
@@ -54,6 +54,12 @@ class PVInstallation(models.Model):
         default='draft',
         tracking=True
     )
+
+    @api.model
+    def create(self, vals):
+        if vals.get('code', 'Nouveau') == 'Nouveau':
+            vals['code'] = self.env['ir.sequence'].next_by_code('pv.installation.sequence') or 'Nouveau'
+        return super(PVInstallation, self).create(vals)
 
     # State Change Methods
     def action_draft(self):

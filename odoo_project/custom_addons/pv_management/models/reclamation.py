@@ -82,6 +82,8 @@ class Reclamation(models.Model):
     def action_create_intervention(self):
         """Bouton pour créer une fiche d'intervention"""
         self.ensure_one()
+        fiche_intervention = self.env['fiche.intervention'].search([('reclamation_id','=',self.id)], limit=1)
+
         return {
             'name': 'Créer une fiche d\'intervention',
             'view_mode': 'form',
@@ -90,7 +92,36 @@ class Reclamation(models.Model):
             'context': {
                 'default_reclamation_id': self.id,
                 'default_installation_id': self.nom_central_id.id,
-                'default_adresse': self.adresse,
+                'default_adresse': self.adresse.id,
                 'default_code_alarm_id': self.code_alarm_id.id,
             },
         }
+    # This function is to be used in the future if needed
+    # def action_create_intervention(self):
+    #     """Bouton pour créer une fiche d'intervention via Python"""
+    #     self.ensure_one()
+    #
+    #     # Vérifications
+    #     if not self.nom_central_id:
+    #         raise UserError("Assurez-vous que le champ 'Nom Central' n'est pas vide.")
+    #     if not self.adresse:
+    #         raise UserError("Assurez-vous que le champ 'Adresse' n'est pas vide.")
+    #     if not self.code_alarm_id:
+    #         raise UserError("Assurez-vous que le champ 'Code Alarme' n'est pas vide.")
+    #
+    #     # Création directe de la fiche d’intervention
+    #     fiche_intervention = self.env['fiche.intervention'].create({
+    #         'reclamation_id': self.id,
+    #         'installation_id': self.nom_central_id.id,
+    #         'adresse': self.adresse.id,
+    #         'code_alarm_id': self.code_alarm_id.id,
+    #     })
+    #
+    #     # Retourne l’action pour ouvrir la fiche créée
+    #     return {
+    #         'name': 'Fiche d\'intervention',
+    #         'type': 'ir.actions.act_window',
+    #         'res_model': 'fiche.intervention',
+    #         'view_mode': 'form',
+    #         'res_id': fiche_intervention.id,
+    #     }

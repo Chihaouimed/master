@@ -25,7 +25,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="code"/>
+                            <field name="code" readonly="1"/>
                             <field name="client"/>
                             <field name="address_id"/>
                             <field name="date_mise_en_service"/>
@@ -136,6 +136,14 @@
         <field name="res_model">pv.installation</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_pv_installation_search"/>
+    </record>
+
+    <!-- Sequence for automatic PV Installation code numbering -->
+    <record id="sequence_pv_installation" model="ir.sequence">
+        <field name="name">Séquence d'installation PV</field>
+        <field name="code">pv.installation.sequence</field>
+        <field name="prefix">PV/</field>
+        <field name="padding">5</field>
     </record>
 
     <menuitem id="menu_pv_root" name="PV Management" sequence="10"/>
