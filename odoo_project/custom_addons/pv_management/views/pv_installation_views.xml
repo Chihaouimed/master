@@ -29,7 +29,6 @@
                             <field name="client"/>
                             <field name="address_id"/>
                             <field name="date_mise_en_service"/>
-                            <field name="active"/>
                         </group>
 
                     </group>
@@ -56,7 +55,6 @@
                                     <tree editable="bottom">
                                     <field name="reference"/>
                                     <field name="brand"/>
-                                    <field name="size"/>
                                     <field name="power"/>
                                     <field name="number_of_modules"/>
 
@@ -68,18 +66,11 @@
                             <group>
                                 <field name="inverters_ids" nolabel="1">
                                     <tree editable="bottom">
-                                        <field name="number_of_inverters"/>
-                                        <field name="reference_onduleur_pv1_id"/>
-                                        <field name="marque_onduleur_pv1"/>
-                                        <field name="puissance_onduleur_pv1"/>
-                                        <field name="calibre_disjoncteur_onduleur_pv1"/>
-                                        <field name="nombre_onduleur_pv1"/>
-                                        <field name="reference_onduleur_pv2_id" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}"/>
-                                        <field name="marque_onduleur_pv2" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}"/>
-                                        <field name="puissance_onduleur_pv2" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}"/>
-                                        <field name="calibre_disjoncteur_onduleur_pv2" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}"/>
-                                        <field name="nombre_onduleur_pv2" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}"/>
-                                        <field name="puissance_totale_ag" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}"/>
+                                        <field name="reference_onduleur_pv_id"/>
+                                        <field name="marque_onduleur_pv_id"/>
+                                        <field name="puissance_onduleur_pv"/>
+                                        <field name="calibre_disjoncteur_onduleur_pv"/>
+                                        <field name="nombre_onduleur_pv"/>
                                     </tree>
                                 </field>
                             </group>

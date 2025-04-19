@@ -7,7 +7,6 @@ class PVModule(models.Model):
 
     reference = fields.Many2one('configuration.district.steg', string='Reference Module PV')
     brand = fields.Char(string='Marque Module PV')
-    size = fields.Char(string='N° de Série Module PV')
     power = fields.Char(string='Puissance Module PV (WC)')
     number_of_modules = fields.Integer(string='Nombre de Module')
 

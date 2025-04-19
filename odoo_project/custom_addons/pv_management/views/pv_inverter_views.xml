@@ -6,28 +6,11 @@
             <form>
                  <sheet>
                     <group>
-                        <!-- Number of Inverters -->
-                        <field name="number_of_inverters"/>
-                    </group>
-
-                    <!-- Group for Onduleur 1 (always shown) -->
-                    <group string="Onduleur 1">
-                        <field name="reference_onduleur_pv1_id"/>
-                        <field name="marque_onduleur_pv1_id"/>
-                        <field name="marque_onduleur_pv1"/>
-                        <field name="puissance_onduleur_pv1"/>
-                        <field name="calibre_disjoncteur_onduleur_pv1"/>
-                        <field name="nombre_onduleur_pv1"/>
-                    </group>
-
-                    <!-- Group for Onduleur 2 (only shown if '2' is selected) -->
-                    <group string="Onduleur 2" attrs="{'invisible': [('number_of_inverters', '!=', '2')]}">
-                        <field name="reference_onduleur_pv2_id"/>
-                        <field name="marque_onduleur_pv2_id"/>
-                        <field name="marque_onduleur_pv2"/>
-                        <field name="puissance_onduleur_pv2"/>
-                        <field name="calibre_disjoncteur_onduleur_pv2"/>
-                        <field name="nombre_onduleur_pv2"/>
+                        <field name="reference_onduleur_pv_id"/>
+                        <field name="marque_onduleur_pv_id"/>
+                        <field name="puissance_onduleur_pv"/>
+                        <field name="calibre_disjoncteur_onduleur_pv"/>
+                        <field name="nombre_onduleur_pv"/>
                     </group>
                 </sheet>
             </form>
@@ -39,13 +22,11 @@
         <field name="model">pv.inverter</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="number_of_inverters"/>
-                <field name="reference_onduleur_pv1_id"/>
-                <field name="marque_onduleur_pv1_id"/>
-                <field name="marque_onduleur_pv1"/>
-                <field name="puissance_onduleur_pv1"/>
-                <field name="calibre_disjoncteur_onduleur_pv1"/>
-                <field name="nombre_onduleur_pv1"/>
+                <field name="reference_onduleur_pv_id"/>
+                <field name="marque_onduleur_pv_id"/>
+                <field name="puissance_onduleur_pv"/>
+                <field name="calibre_disjoncteur_onduleur_pv"/>
+                <field name="nombre_onduleur_pv"/>
                 <field name="puissance_totale_ag"/>
             </tree>
         </field>

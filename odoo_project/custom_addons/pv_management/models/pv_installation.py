@@ -18,11 +18,7 @@ class PVInstallation(models.Model):
     code = fields.Char(string='Code', readonly=True, copy=False, default=lambda self: self.env['ir.sequence'].next_by_code('pv.installation.sequence') or 'Nouveau')
     client = fields.Many2one('res.partner', string='Client')
     date_mise_en_service = fields.Date(string='Date de Mise en Service')
-    address_id = fields.Many2one(
-        'res.partner',
-        string='Adresse',
-        ondelete='set null'
-    )
+    address_id = fields.Char(string='Street', related='client.street', readonly=True)
     type_installation = fields.Selection([
         ('bt_residentiel', 'BT - Résidentiel'),
         ('bt_commercial', 'BT - Commercial'),
