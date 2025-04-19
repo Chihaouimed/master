@@ -6,13 +6,11 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_view_reclamation" string="Voir la réclamation"
-                            type="object" class="oe_highlight" icon="fa-arrow-left"
-                            attrs="{'invisible': [('reclamation_id', '=', False)]}"/>
-                    <button name="action_draft" string="Ouvrir" states="in_progress,block,closed" type="object" class="oe_highlight"/>
-                    <button name="action_in_progress" string="En cours" states="draft,block" type="object" class="oe_highlight"/>
+                     <button name="action_view_reclamation" string="Voir la réclamation" type="object" class="oe_highlight" icon="fa-arrow-left" attrs="{'invisible': ['|', ('reclamation_id', '=', False), ('state', '=', 'closed')]}"/>
+                     <button name="action_draft" string="Ouvrir" states="in_progress,block" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'closed')]}"/>
+                    <button name="action_in_progress" string="En cours" states="draft,block" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'closed')]}"/>
                     <button name="action_closed" string="Fermer" states="draft,in_progress" type="object" class="oe_highlight"/>
-                    <button name="action_block" string="Bloquer" states="draft,in_progress" type="object"/>
+                    <button name="action_block" string="Bloquer" states="draft,in_progress" type="object" attrs="{'invisible': [('state', '=', 'closed')]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,closed"/>
                 </header>
                 <sheet>
@@ -23,23 +21,23 @@
                     </div>
                     <group>
                         <group>
-                            <field name="type_intervention"/>
-                            <field name="date"/>
-                            <field name="heure_intervention" widget="float_time"/>
-                            <field name="adresse"/>
-                            <field name="installation_id"/>
-                            <field name="reclamation_id"/>
+                            <field name="type_intervention" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="date" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="heure_intervention" widget="float_time" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="adresse" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="installation_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="reclamation_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
                         </group>
                         <group>
-                            <field name="technicien_id"/>
-                            <field name="equipe_intervention_ids" widget="many2many_tags"/>
-                            <field name="code_alarm_id"/>
-                            <field name="date_cloture"/>
+                            <field name="technicien_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="equipe_intervention_ids" widget="many2many_tags" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="code_alarm_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="date_cloture" attrs="{'readonly': [('state', '=', 'closed')]}"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Agenda">
-                            <field name="agenda_line_ids">
+                            <field name="agenda_line_ids" attrs="{'readonly': [('state', '=', 'closed')]}">
                                 <tree editable="bottom">
                                      <field name="date_intervention"/>
                                      <field name="description"/>
@@ -47,10 +45,7 @@
                             </field>
                         </page>
                         <page string="Actions effectuées">
-                            <field name="actions_effectuees" placeholder="Actions effectuées..."/>
-                        </page>
-                        <page string="Bilan d'intervention" attrs="{'invisible': [('state', '!=', 'closed')]}">
-                            <field name="intervention_text" placeholder="Bilan final de l'intervention..."/>
+                            <field name="actions_effectuees" placeholder="Actions effectuées..." attrs="{'readonly': [('state', '=', 'closed')]}"/>
                         </page>
                     </notebook>
                 </sheet>
