@@ -7,3 +7,4 @@ access_alarm_management,alarm.management,model_alarm_management,,1,1,1,1
 access_marque_onduleur,marque.onduleur,model_marque_onduleur,,1,1,1,1
 access_reclamation,reclamation,model_reclamation,,1,1,1,1
 access_fiche_intervention,fiche.intervention,model_fiche_intervention,,1,1,1,1
+access_agenda_intervention_line,agenda.intervention.line,model_agenda_intervention_line,,1,1,1,1

@@ -38,10 +38,12 @@
                     </group>
                     <notebook>
                         <page string="Agenda">
-                            <field name="agenda" placeholder="Programme prévu..."/>
-                        </page>
-                        <page string="Description">
-                            <field name="description" placeholder="Description détaillée..."/>
+                            <field name="agenda_line_ids">
+                                <tree editable="bottom">
+                                     <field name="date_intervention"/>
+                                     <field name="description"/>
+                                </tree>
+                            </field>
                         </page>
                         <page string="Actions effectuées">
                             <field name="actions_effectuees" placeholder="Actions effectuées..."/>

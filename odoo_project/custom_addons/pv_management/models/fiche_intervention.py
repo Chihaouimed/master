@@ -1,6 +1,15 @@
 from odoo import models, fields, api
 
 
+class AgendaInterventionLine(models.Model):
+    _name = 'agenda.intervention.line'
+    _description = "Ligne d'agenda d'intervention"
+
+    date_intervention = fields.Date(string="Date d'intervention", required=True)
+    description = fields.Text(string="Description de l'intervention", required=True)
+    fiche_intervention_id = fields.Many2one('fiche.intervention', string="Fiche d'intervention")
+
+
 class FicheIntervention(models.Model):
     _name = 'fiche.intervention'
     _description = 'Fiche d\'intervention'
@@ -22,7 +31,8 @@ class FicheIntervention(models.Model):
     # Heure d'intervention (new field)
     heure_intervention = fields.Float(string='Heure d\'intervention', copy=True)
     # Agenda (new field)
-    agenda = fields.Text(string='Agenda', help="Programme prévu pour l'intervention")
+    agenda_line_ids = fields.One2many('agenda.intervention.line', 'fiche_intervention_id',
+                                      string='Agenda', help="Programme prévu pour l'intervention")
 
     adresse =  fields.Many2one( 'res.partner', string='Adresse')
     installation_id = fields.Many2one('pv.installation', string='Installation')
