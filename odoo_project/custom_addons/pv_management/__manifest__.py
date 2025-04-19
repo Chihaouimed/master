@@ -16,6 +16,7 @@
         'views/marque_onduleur_views.xml',
         'views/fiche_intervention_views.xml',
         'views/configuration_steg_views.xml',
+        'views/evaluation_views.xml',
     ],
     'installable': True,
     'application': True,

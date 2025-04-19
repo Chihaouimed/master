@@ -11,6 +11,7 @@ class PVInstallation(models.Model):
     _order = 'id desc'
     module_ids = fields.One2many('pv.module', 'installation_id', string='Modules PV')
     inverters_ids = fields.One2many('pv.inverter', 'installation_id', string='Onduleur PV')
+    evaluation_ids = fields.One2many('pv.evaluation', 'installation_id', string='Evaluations')
 
     # Fields
     active = fields.Boolean(string='Active', default=True)
