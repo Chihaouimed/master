@@ -14,10 +14,16 @@ class Reclamation(models.Model):
                        default=lambda self: self.env['ir.sequence'].next_by_code('reclamation.sequence') or 'Nouveau')
     date_heure = fields.Datetime(string='Date et Heure', required=True, default=fields.Datetime.now)
     adresse = fields.Many2one( 'res.partner', string='Adresse',ondelete='set null')
-    contrat_id = fields.Many2one('res.partner', string='Contrat')  # À adapter selon votre modèle de contrat
+    contrat_id = fields.Many2one('res.partner', string='Client')  # À adapter selon votre modèle de contrat
     nom_central_id = fields.Many2one('pv.installation', string='Nom Central')
     description = fields.Text(string='Description', required=True)
     code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
+    priorite_urgence = fields.Selection([
+        ('basse', 'Basse'),
+        ('moyenne', 'Moyenne'),
+        ('haute', 'Haute')
+    ], string='Priorité d\'urgence')
+    date_disponibilite = fields.Date(string='Date de disponibilité')
     cause_alarme = fields.Text(string='Cause de l\'Alarme')
 
     # État de la réclamation

@@ -35,6 +35,10 @@
                         <group>
                             <field name="nom_central_id"/>
                             <field name="code_alarm_id"/>
+                            <field name="priorite_urgence"/>
+                        </group>
+                        <group>
+                            <field name="date_disponibilite"/>
                         </group>
                     </group>
                     <notebook>

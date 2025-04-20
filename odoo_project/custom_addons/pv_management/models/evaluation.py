@@ -11,7 +11,7 @@ class Evaluation(models.Model):
                        default=lambda self: self.env['ir.sequence'].next_by_code('pv.evaluation.sequence') or 'New')
     installation_id = fields.Many2one('pv.installation', string='Installation', required=True)
     date_evaluation = fields.Date(string='Evaluation Date', default=fields.Date.today, required=True)
-    evaluator_id = fields.Many2one('hr.employee', string='Evaluator')
+    evaluator_id = fields.Char(related='installation_id.cli', string='Client', readonly=True)
 
     # Technical evaluation fields
     performance_ratio = fields.Float(string='Performance Ratio (%)',
