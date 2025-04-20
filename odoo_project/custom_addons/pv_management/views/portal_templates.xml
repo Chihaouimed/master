@@ -1,0 +1,209 @@
+<!-- views/portal_templates.xml -->
+<odoo>
+    <!-- Add menu items to portal sidebar -->
+    <template id="portal_menu_items" inherit_id="portal.portal_sidebar">
+        <xpath expr="//div[@id='sidebar_content']/div" position="inside">
+            <a href="/my/installations" class="btn btn-link">
+                <i class="fa fa-solar-panel"/> My Installations
+            </a>
+        </xpath>
+    </template>
+
+    <!-- Installations List View -->
+    <template id="portal_my_installations">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My PV Installations</t>
+
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col">
+                        <h2>My PV Installations</h2>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Installation Date</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="installations" t-as="installation">
+                                    <tr>
+                                        <td t-esc="installation.name"/>
+                                        <td t-esc="installation.date_mise_en_service"/>
+                                        <td t-esc="installation.type_installation"/>
+                                        <td>
+                                            <span t-attf-class="badge bg-{{ {
+                                                'draft': 'secondary',
+                                                'in_progress': 'primary',
+                                                'in_production': 'success',
+                                                'in_stop': 'warning',
+                                                'canceled': 'danger'
+                                            }[installation.state] }}">
+                                                <t t-esc="installation.state"/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a t-att-href="'/my/installation/%s' % installation.id"
+                                               class="btn btn-sm btn-primary">
+                                                View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="pager" t-if="pager['pages'] > 1">
+                            <ul class="pagination">
+                                <li t-if="pager['previous']" class="page-item">
+                                    <a t-att-href="pager['previous']['url']" class="page-link">Previous</a>
+                                </li>
+                                <li t-foreach="pager['pages']" t-as="page" class="page-item">
+                                    <a t-att-href="page['url']"
+                                       t-att-class="'page-link' + (' active' if page['num'] == pager['page'] else '')"
+                                       t-esc="page['num']"/>
+                                </li>
+                                <li t-if="pager['next']" class="page-item">
+                                    <a t-att-href="pager['next']['url']" class="page-link">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Installation Detail View -->
+    <template id="portal_installation_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="title" t-esc="'Installation: ' + installation.name"/>
+
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col">
+                        <h2 t-esc="installation.name"/>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Installation Details</h3>
+                            </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Installation Date</dt>
+                                    <dd class="col-sm-8" t-esc="installation.date_mise_en_service"/>
+
+                                    <dt class="col-sm-4">Type</dt>
+                                    <dd class="col-sm-8" t-esc="installation.type_installation"/>
+
+                                    <dt class="col-sm-4">Status</dt>
+                                    <dd class="col-sm-8">
+                                        <span t-attf-class="badge bg-{{ {
+                                            'draft': 'secondary',
+                                            'in_progress': 'primary',
+                                            'in_production': 'success',
+                                            'in_stop': 'warning',
+                                            'canceled': 'danger'
+                                        }[installation.state] }}">
+                                            <t t-esc="installation.state"/>
+                                        </span>
+                                    </dd>
+
+                                    <dt class="col-sm-4">Reference</dt>
+                                    <dd class="col-sm-8" t-esc="installation.code"/>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Technical Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Total Power</dt>
+                                    <dd class="col-sm-8">
+                                        <t t-set="total_power"
+                                           t-value="sum(module.power for module in installation.module_ids)"/>
+                                        <t t-esc="'%.2f kWp' % total_power"/>
+                                    </dd>
+
+                                    <dt class="col-sm-4">Modules</dt>
+                                    <dd class="col-sm-8">
+                                        <t t-esc="len(installation.module_ids)"/>
+                                    </dd>
+
+                                    <dt class="col-sm-4">Inverters</dt>
+                                    <dd class="col-sm-8">
+                                        <t t-esc="len(installation.inverters_ids)"/>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Recent Interventions</h3>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="installation.intervention_ids.sorted(key='date', reverse=True)[:5]"
+                                           t-as="intervention">
+                                            <tr>
+                                                <td t-esc="intervention.date"/>
+                                                <td t-esc="intervention.type_intervention"/>
+                                                <td t-esc="intervention.actions_effectuees or 'No description'"/>
+                                                <td>
+                                                    <span t-attf-class="badge bg-{{ {
+                                                        'draft': 'secondary',
+                                                        'in_progress': 'primary',
+                                                        'closed': 'success',
+                                                        'block': 'danger'
+                                                    }[intervention.state] }}">
+                                                        <t t-esc="intervention.state"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+
+                                <a t-att-href="'/my/installation/%s/interventions' % installation.id"
+                                   class="btn btn-primary">
+                                    View All Interventions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

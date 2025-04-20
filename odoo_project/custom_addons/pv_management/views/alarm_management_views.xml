@@ -41,9 +41,14 @@
             <search>
                 <field name="name"/>
                 <field name="code_alarm"/>
-                <group expand="0" string="Group By">
-                    <filter name="group_by_partie" string="Partie" context="{'group_by': 'partie'}"/>
-                </group>
+                 <field name="partie"/>
+    <separator/>
+    <filter string="Onduleur Alarms" name="filter_partie_onduleur" domain="[('partie','=','onduleur')]"/>
+    <filter string="Module Alarms" name="filter_partie_module" domain="[('partie','=','module')]"/>
+    <group expand="0" string="Group By">
+        <filter name="group_by_partie" string="Partie" context="{'group_by': 'partie'}"/>
+        <filter name="group_by_marque" string="Marque" context="{'group_by': 'marque_onduleur_id'}"/>
+    </group>
             </search>
         </field>
     </record>
