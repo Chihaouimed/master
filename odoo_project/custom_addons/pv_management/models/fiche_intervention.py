@@ -84,12 +84,3 @@ class FicheIntervention(models.Model):
 
     def action_block(self):
         self.write({'state': 'block'})
-
-        def action_closed(self):
-            # Do any validation if needed before closing
-            # For example, ensure required fields are filled
-            self.write({
-                'state': 'closed',
-                # You could set a timestamp here if needed
-                # 'closed_date': fields.Datetime.now(),
-            })
