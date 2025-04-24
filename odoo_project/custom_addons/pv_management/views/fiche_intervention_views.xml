@@ -22,11 +22,9 @@
                     <group>
                         <group>
                             <field name="type_intervention" attrs="{'readonly': [('state', '=', 'closed')]}"/>
-                            <field name="date" attrs="{'readonly': [('state', '=', 'closed')]}"/>
-                            <field name="heure_intervention" widget="float_time" attrs="{'readonly': [('state', '=', 'closed')]}"/>
-                            <field name="adresse" attrs="{'readonly': [('state', '=', 'closed')]}"/>
-                            <field name="installation_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
-                            <field name="reclamation_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="installation_id"/>
+                            <field name="adresse"/>
+                            <field name="reclamation_id"/>
                         </group>
                         <group>
                             <field name="technicien_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
@@ -66,7 +64,6 @@
             <tree decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-danger="state == 'block'" decoration-success="state == 'closed'">
                 <field name="name"/>
                 <field name="type_intervention"/>
-                <field name="date"/>
                 <field name="installation_id"/>
                 <field name="technicien_id"/>
                 <field name="state"/>

@@ -5,7 +5,7 @@ class AgendaInterventionLine(models.Model):
     _name = 'agenda.intervention.line'
     _description = "Ligne d'agenda d'intervention"
 
-    date_intervention = fields.Date(string="Date d'intervention", required=True)
+    date_intervention = fields.Datetime(string='Date d\'intervention', required=True, default=fields.Datetime.now)
     description = fields.Text(string="Description de l'intervention", required=True)
     fiche_intervention_id = fields.Many2one('fiche.intervention', string="Fiche d'intervention")
 
@@ -27,16 +27,11 @@ class FicheIntervention(models.Model):
         ('autre', 'Autre')
     ], string='Type d\'intervention', required=True, tracking=True)
 
-    date = fields.Date(string='Date d\'intervention', required=True, default=fields.Date.today)
-    # Heure d'intervention (new field)
-    heure_intervention = fields.Float(string='Heure d\'intervention', copy=True)
     # Agenda (new field)
-    agenda_line_ids = fields.One2many('agenda.intervention.line', 'fiche_intervention_id',
-                                      string='Agenda', help="Programme prévu pour l'intervention")
-
-    adresse =  fields.Many2one( 'res.partner', string='Adresse')
-    installation_id = fields.Many2one('pv.installation', string='Installation')
-    reclamation_id = fields.Many2one('reclamation', string='Réclamation associée')
+    agenda_line_ids = fields.One2many('agenda.intervention.line', 'fiche_intervention_id', string='Agenda', help="Programme prévu pour l'intervention")
+    installation_id = fields.Many2one('pv.installation', string='Installation', readonly=True)
+    adresse = fields.Char(string='Adresse', readonly=True)
+    reclamation_id = fields.Many2one('reclamation', string='Réclamation associée', readonly=True)
     code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
     date_cloture = fields.Date(string='Date de cloture', required=True)
     actions_effectuees = fields.Text(string='Actions effectuées')

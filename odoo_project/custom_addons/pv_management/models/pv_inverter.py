@@ -12,7 +12,7 @@ class PVInverter(models.Model):
 
     # Inverter 1
     reference_onduleur_pv_id = fields.Many2one('configuration.district.steg', string='Reference Onduleur PV')
-    marque_onduleur_pv_id = fields.Char(related='reference_onduleur_pv_id.name', string='Marque Onduleur PV', readonly=True)
+    marque_onduleur_pv_id = fields.Char(related='reference_onduleur_pv_id.mo', string='Marque Onduleur PV', readonly=True)
     puissance_onduleur_pv = fields.Char(string='Puissance Onduleur (KVA)')
     calibre_disjoncteur_onduleur_pv = fields.Char(string='Calibre Disjoncteur Onduleur  (A)')
     nombre_onduleur_pv = fields.Integer(string="Nombre d'Onduleur ")

@@ -13,8 +13,8 @@ class Reclamation(models.Model):
     name = fields.Char(string='Référence', required=True, copy=False, readonly=True,
                        default=lambda self: self.env['ir.sequence'].next_by_code('reclamation.sequence') or 'Nouveau')
     date_heure = fields.Datetime(string='Date et Heure', required=True, default=fields.Datetime.now)
-    adresse = fields.Many2one( 'res.partner', string='Adresse',ondelete='set null')
-    contrat_id = fields.Many2one('res.partner', string='Client')  # À adapter selon votre modèle de contrat
+    client_id = fields.Many2one('res.partner', string='Client')
+    adresse = fields.Char(related='client_id.street', string='Adresse', readonly=True)
     nom_central_id = fields.Many2one('pv.installation', string='Nom Central')
     description = fields.Text(string='Description', required=True)
     code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
@@ -23,7 +23,7 @@ class Reclamation(models.Model):
         ('moyenne', 'Moyenne'),
         ('haute', 'Haute')
     ], string='Priorité d\'urgence')
-    date_disponibilite = fields.Date(string='Date de disponibilité')
+    date_disponibilite = fields.Datetime(string='Date de disponibilité', required=True, default=fields.Datetime.now)
     cause_alarme = fields.Text(string='Cause de l\'Alarme')
 
     # État de la réclamation
@@ -98,7 +98,7 @@ class Reclamation(models.Model):
             'context': {
                 'default_reclamation_id': self.id,
                 'default_installation_id': self.nom_central_id.id,
-                'default_adresse': self.adresse.id,
+                'default_adresse': self.adresse,
                 'default_code_alarm_id': self.code_alarm_id.id,
             },
         }
