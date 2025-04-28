@@ -9,7 +9,7 @@
                         <field name="reference"/>
                         <field name="brand"/>
                         <field name="power"/>
-                        <field name="number_of_modules"/>
+
 
                     </group>
                 </sheet>
@@ -25,14 +25,14 @@
                 <field name="reference"/>
                 <field name="brand"/>
                 <field name="power"/>
-                <field name="number_of_modules"/>
+
 
             </tree>
         </field>
     </record>
 
     <record id="action_pv_module" model="ir.actions.act_window">
-        <field name="name">PV Modules</field>
+        <field name="name">Modules</field>
         <field name="res_model">pv.module</field>
         <field name="view_mode">tree,form</field>
     </record>

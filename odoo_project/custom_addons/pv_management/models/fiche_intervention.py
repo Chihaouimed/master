@@ -32,9 +32,8 @@ class FicheIntervention(models.Model):
     installation_id = fields.Many2one('pv.installation', string='Installation', readonly=True)
     adresse = fields.Char(string='Adresse', readonly=True)
     reclamation_id = fields.Many2one('reclamation', string='Réclamation associée', readonly=True)
-    code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
-    date_cloture = fields.Date(string='Date de cloture', required=True)
-    actions_effectuees = fields.Text(string='Actions effectuées')
+    code_alarm_id = fields.Char(string='Code Alarm' , readonly=True)
+    date_cloture = fields.Date(string='Date Prévue de Cloture', required=True)
 
     # Updated state field to match Help Desk
     state = fields.Selection([

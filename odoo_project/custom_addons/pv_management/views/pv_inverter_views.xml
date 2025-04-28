@@ -10,7 +10,7 @@
                         <field name="marque_onduleur_pv_id"/>
                         <field name="puissance_onduleur_pv"/>
                         <field name="calibre_disjoncteur_onduleur_pv"/>
-                        <field name="nombre_onduleur_pv"/>
+
                     </group>
                 </sheet>
             </form>
@@ -26,14 +26,13 @@
                 <field name="marque_onduleur_pv_id"/>
                 <field name="puissance_onduleur_pv"/>
                 <field name="calibre_disjoncteur_onduleur_pv"/>
-                <field name="nombre_onduleur_pv"/>
                 <field name="puissance_totale_ag"/>
             </tree>
         </field>
     </record>
 
     <record id="action_pv_inverter" model="ir.actions.act_window">
-        <field name="name">PV Inverters</field>
+        <field name="name">Onduleurs</field>
         <field name="res_model">pv.inverter</field>
         <field name="view_mode">tree,form</field>
     </record>

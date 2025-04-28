@@ -14,8 +14,8 @@ class Reclamation(models.Model):
                        default=lambda self: self.env['ir.sequence'].next_by_code('reclamation.sequence') or 'Nouveau')
     date_heure = fields.Datetime(string='Date et Heure', required=True, default=fields.Datetime.now)
     client_id = fields.Many2one('res.partner', string='Client')
-    adresse = fields.Char(related='client_id.street', string='Adresse', readonly=True)
-    nom_central_id = fields.Many2one('pv.installation', string='Nom Central')
+    nom_central_id = fields.Many2one('pv.installation', string='Nom Instalation')
+    adresse = fields.Char(related='nom_central_id.address_id', string='Adresse', readonly=True)
     description = fields.Text(string='Description', required=True)
     code_alarm_id = fields.Many2one('alarm.management', string='Code Alarm')
     priorite_urgence = fields.Selection([
@@ -99,35 +99,7 @@ class Reclamation(models.Model):
                 'default_reclamation_id': self.id,
                 'default_installation_id': self.nom_central_id.id,
                 'default_adresse': self.adresse,
-                'default_code_alarm_id': self.code_alarm_id.id,
+                'default_code_alarm_id': self.code_alarm_id.name,
             },
         }
-    # This function is to be used in the future if needed
-    # def action_create_intervention(self):
-    #     """Bouton pour créer une fiche d'intervention via Python"""
-    #     self.ensure_one()
-    #
-    #     # Vérifications
-    #     if not self.nom_central_id:
-    #         raise UserError("Assurez-vous que le champ 'Nom Central' n'est pas vide.")
-    #     if not self.adresse:
-    #         raise UserError("Assurez-vous que le champ 'Adresse' n'est pas vide.")
-    #     if not self.code_alarm_id:
-    #         raise UserError("Assurez-vous que le champ 'Code Alarme' n'est pas vide.")
-    #
-    #     # Création directe de la fiche d’intervention
-    #     fiche_intervention = self.env['fiche.intervention'].create({
-    #         'reclamation_id': self.id,
-    #         'installation_id': self.nom_central_id.id,
-    #         'adresse': self.adresse.id,
-    #         'code_alarm_id': self.code_alarm_id.id,
-    #     })
-    #
-    #     # Retourne l’action pour ouvrir la fiche créée
-    #     return {
-    #         'name': 'Fiche d\'intervention',
-    #         'type': 'ir.actions.act_window',
-    #         'res_model': 'fiche.intervention',
-    #         'view_mode': 'form',
-    #         'res_id': fiche_intervention.id,
-    #     }
+    

@@ -29,7 +29,7 @@
                         <group>
                             <field name="technicien_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
                             <field name="equipe_intervention_ids" widget="many2many_tags" attrs="{'readonly': [('state', '=', 'closed')]}"/>
-                            <field name="code_alarm_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="code_alarm_id"/>
                             <field name="date_cloture" attrs="{'readonly': [('state', '=', 'closed')]}"/>
                         </group>
                     </group>
@@ -41,9 +41,6 @@
                                      <field name="description"/>
                                 </tree>
                             </field>
-                        </page>
-                        <page string="Actions effectuées">
-                            <field name="actions_effectuees" placeholder="Actions effectuées..." attrs="{'readonly': [('state', '=', 'closed')]}"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -96,7 +93,7 @@
 
     <!-- Action -->
     <record id="action_fiche_intervention" model="ir.actions.act_window">
-        <field name="name">Fiches d'intervention</field>
+        <field name="name">Fiches des interventions</field>
         <field name="res_model">fiche.intervention</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_fiche_intervention_search"/>

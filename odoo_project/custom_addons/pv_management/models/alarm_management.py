@@ -21,4 +21,4 @@ class MarqueOnduleur(models.Model):
     _description = 'Marque Onduleur'
 
     name = fields.Char(string='Name', required=True, translate=True)
-    code = fields.Char(string='Code', translate=True)  # Optional identifier field
+    code = fields.Char(string='Code', translate=True)

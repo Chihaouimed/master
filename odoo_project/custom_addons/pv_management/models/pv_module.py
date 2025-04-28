@@ -5,10 +5,10 @@ class PVModule(models.Model):
     _description = 'PV Module'
     installation_id = fields.Many2one('pv.installation', string='Installation')
 
-    reference = fields.Many2one('configuration.district.steg', string='Reference Module PV')
-    brand = fields.Char(related='reference.mo', string='Marque Onduleur', readonly=True)
+    reference = fields.Char(string='Reference Module PV')
+    brand = fields.Many2one( 'marque.onduleur' , string='Marque Onduleur')
     power = fields.Char(string='Puissance Module PV (WC)')
-    number_of_modules = fields.Integer(string='Nombre de Module')
+
 
 
 
